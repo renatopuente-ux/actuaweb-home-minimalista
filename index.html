@@ -134,9 +134,16 @@
     .head h2, .cta h2 { font-size: 28px; }
     .card { padding: 24px; }
     .form .card { padding: 24px; }
-    .header .card { gap: 16px; padding: 14px 18px; }
-    .nav { gap: 14px 18px; width: 100%; order: 3; }
-    .logo { width: 140px; }
+    .header .card { gap: 14px 10px; padding: 14px 16px; }
+    .header .card > a:first-child { margin-right: auto; }
+    .header .btn { padding: 8px 12px; font-size: 14px; }
+    .nav { gap: 14px 18px; width: 100%; order: 3; margin-right: 0; }
+    .logo { width: 110px; }
+  }
+  @media (max-width: 379px) {
+    .logo { width: 96px; }
+    .header .btn { padding: 8px 10px; font-size: 13px; }
+    .nav { gap: 10px 12px; font-size: 14px; }
   }
 </style>
 </head>
