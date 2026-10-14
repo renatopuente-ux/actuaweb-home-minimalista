@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es-EC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Demo interna: no indexar (el contenido es el mismo de actuaria.com). -->
+<meta name="robots" content="noindex, nofollow">
+<title>Actuaria Consultores · Versión minimalista</title>
+<style>
+  /* Home de actuaria.com reducido a lo mínimo: solo neumorfismo (superficie única y sombras luz/sombra),
+     el logo, los colores de marca y las fotografías. Sin íconos, texturas, vidrio, videos, animaciones,
+     efectos al pasar el mouse ni fuentes de marca (tipografía del sistema). */
+  :root {
+    --bg: #e8ecf4;
+    --hi: #ffffff;
+    --lo: #c4cbda;
+    --navy: #151f47;
+    --blue: #3061aa;
+    --orange: #df5e2d;
+    --text: #4a5372;
+    --raised: 8px 8px 18px var(--lo), -8px -8px 18px var(--hi);
+    --raised-sm: 5px 5px 10px var(--lo), -5px -5px 10px var(--hi);
+    --inset: inset 4px 4px 9px var(--lo), inset -4px -4px 9px var(--hi);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.6; }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: var(--blue); text-decoration: none; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  h1, h2, h3, h4 { color: var(--navy); margin: 0; line-height: 1.2; }
+  p { margin: 0; }
+  .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .card { background: var(--bg); border-radius: 22px; box-shadow: var(--raised); padding: 32px; }
+  .btn { display: inline-block; background: var(--bg); color: var(--navy); font: inherit; font-weight: 600; border: 0; border-radius: 14px; box-shadow: var(--raised-sm); padding: 14px 26px; cursor: pointer; }
+  .btn-blue { color: var(--blue); }
+  .eyebrow { color: var(--blue); font-size: 14px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
+  .head { text-align: center; max-width: 760px; margin: 0 auto 48px; }
+  .head h2 { font-size: 36px; margin-bottom: 14px; }
+  .head p { font-size: 18px; }
+
+  /* Header */
+  .header { padding: 20px 0; }
+  .header .card { display: flex; align-items: center; gap: 28px; padding: 16px 28px; flex-wrap: wrap; }
+  .logo { width: 170px; flex: none; }
+  .nav { display: flex; gap: 26px; flex-wrap: wrap; margin-right: auto; }
+  .nav a { color: var(--navy); font-weight: 500; }
+  .header .btn { padding: 10px 20px; }
+
+  /* Hero */
+  .hero { padding-top: 48px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: 52px; margin-bottom: 20px; }
+  .hero-copy p { font-size: 19px; margin-bottom: 32px; max-width: 560px; }
+  .news { display: grid; gap: 20px; }
+  .news .card { padding: 24px 28px; }
+  .news .tag { color: var(--blue); font-size: 14px; font-weight: 600; }
+  .news .date { font-size: 14px; margin: 2px 0 8px; }
+  .news h3 { font-size: 19px; margin-bottom: 12px; }
+  .news .all { justify-self: start; }
+
+  /* Trayectoria */
+  .features-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; }
+  .story img { border-radius: 16px; margin-bottom: 28px; width: 100%; }
+  .story h2 { font-size: 32px; margin-bottom: 14px; }
+  .story p { margin-bottom: 26px; }
+  .stats { display: grid; gap: 32px; }
+  .stat .num { font-size: 52px; font-weight: 700; color: var(--navy); line-height: 1; }
+  .stat h3 { font-size: 20px; margin: 10px 0 8px; }
+
+  /* Soluciones */
+  .solutions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .solution h3 { font-size: 24px; margin-bottom: 12px; }
+  .solution p { margin-bottom: 22px; }
+  .solution a { font-weight: 600; }
+
+  /* Clientes */
+  .brands { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
+  .brands span { background: var(--bg); box-shadow: var(--raised-sm); border-radius: 12px; padding: 12px 22px; color: var(--navy); font-weight: 600; }
+
+  /* Testimonios */
+  .testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .testi blockquote { margin: 0 0 22px; font-size: 17px; }
+  .testi .who { color: var(--navy); font-weight: 700; }
+  .testi .role { font-size: 14px; }
+
+  /* Certificaciones */
+  .cert-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .cert { padding: 24px; text-align: center; color: var(--navy); font-weight: 600; display: flex; flex-direction: column; justify-content: center; gap: 10px; hyphens: auto; overflow-wrap: break-word; }
+  .cert a { font-weight: 600; font-size: 14px; }
+
+  /* CTA */
+  .cta .card { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 24px; }
+  .cta img { border-radius: 16px; width: 100%; }
+  .cta-copy { padding: 16px 24px 16px 0; }
+  .cta h2 { font-size: 36px; margin-bottom: 16px; }
+  .cta p { font-size: 18px; margin-bottom: 28px; }
+
+  /* Formulario */
+  .form .card { max-width: 880px; margin: 0 auto; padding: 40px; }
+  .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 28px; }
+  .field label { display: block; color: var(--navy); font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .field input, .field textarea { width: 100%; font: inherit; color: var(--navy); background: var(--bg); border: 0; border-radius: 12px; box-shadow: var(--inset); padding: 13px 16px; }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .full { grid-column: 1 / -1; }
+  fieldset { border: 0; margin: 0; padding: 0; }
+  legend { color: var(--navy); font-weight: 600; font-size: 15px; margin-bottom: 10px; }
+  .checks { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .check input { accent-color: var(--blue); width: 18px; height: 18px; margin: 3px 0 0; flex: none; }
+  .form .btn { margin-top: 28px; }
+
+  /* Footer */
+  .footer { padding: 24px 0 40px; }
+  .footer .card { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1fr; gap: 32px; font-size: 15px; }
+  .footer h4 { font-size: 16px; margin-bottom: 12px; }
+  .footer p { margin-bottom: 8px; }
+  .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .footer .logo { margin-bottom: 18px; }
+  .copy { text-align: center; font-size: 14px; margin-top: 28px; }
+
+  @media (max-width: 991px) {
+    .hero-grid, .features-grid, .cta .card { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .footer .card { grid-template-columns: 1fr 1fr; }
+    .hero h1 { font-size: 42px; }
+    .cta-copy { padding: 0 8px 8px; }
+  }
+  @media (max-width: 767px) {
+    section { padding: 48px 0; }
+    .solutions-grid, .testi-grid, .fields, .footer .card { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 34px; }
+    .head h2, .cta h2 { font-size: 28px; }
+    .card { padding: 24px; }
+    .form .card { padding: 24px; }
+    .header .card { gap: 16px; padding: 14px 18px; }
+    .nav { gap: 14px 18px; width: 100%; order: 3; }
+    .logo { width: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap">
+    <div class="card">
+      <a href="https://actuaria.com/" aria-label="Actuaria Consultores"><img class="logo" src="assets/logo-actuaria.svg" alt="Actuaria" width="170" height="41"></a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#soluciones">Soluciones</a>
+        <a href="https://actuaria.com/12-calculadoras-especializadas">Recursos</a>
+        <a href="https://actuaria.com/nosotros">Nosotros</a>
+        <a href="https://actuaria.com/blog">Blog</a>
+      </nav>
+      <a class="btn" href="#form">Contacto</a>
+      <a class="btn btn-blue" href="https://plus.actuaria.com/">actuaria+</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>Convertimos la incertidumbre técnica en decisiones rentables.</h1>
+        <p>Aplicamos consultoría especializada en finanzas, riesgos y beneficios laborales impulsados por modelos matemáticos de alta precisión.</p>
+        <a class="btn" href="#soluciones">Descubre cómo lo hacemos</a>
+      </div>
+      <div class="news">
+        <a class="card" href="https://actuaria.com/post/actuaria-en-el-vii-congreso-tributa-2026-organizado-por-el-colegio-de-contadores">
+          <div class="tag">Actuanews</div>
+          <div class="date">2026-09-24</div>
+          <h3>Actuaria en el VII Congreso Tributa 2026 organizado por el Colegio de Contadores</h3>
+          <span>Seguir leyendo</span>
+        </a>
+        <a class="card" href="https://actuaria.com/post/por-que-estar-asegurados-nos-hace-asumir-mas-riesgos">
+          <div class="tag">Seguros y Medicina Prepagada</div>
+          <div class="date">2026-08-31</div>
+          <h3>¿Por qué estar asegurados nos hace asumir más riesgos?</h3>
+          <span>Seguir leyendo</span>
+        </a>
+        <a class="btn all" href="https://actuaria.com/blog">Ver todas las noticias</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="wrap features-grid">
+      <div class="card story">
+        <img src="assets/equipo-actuaria.webp" alt="Equipo de Actuaria Consultores" width="800" height="419">
+        <div class="eyebrow">Nuestra Trayectoria</div>
+        <h2>Más de 40 años de experiencia que respaldan cada decisión</h2>
+        <p>Transformamos conocimiento actuarial, experiencia y visión estratégica en soluciones que permiten anticipar riesgos y fortalecer el futuro financiero de nuestros clientes.</p>
+        <a class="btn" href="#form">Solicita una cotización</a>
+      </div>
+      <div class="stats">
+        <div class="card stat">
+          <div class="num">+6.500</div>
+          <h3>Clientes en la región</h3>
+          <p>Empresas que confían en nuestra experiencia para proteger su rentabilidad y gestionar sus riesgos.</p>
+        </div>
+        <div class="card stat">
+          <div class="num">40.000</div>
+          <h3>Estudios actuariales</h3>
+          <p>Estudios entregados en los últimos 5 años que se han convertido en decisiones seguras para nuestros clientes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="soluciones" class="solutions">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Soluciones especializadas</div>
+        <h2>El rigor actuarial que convierte la incertidumbre en decisiones estratégicas.</h2>
+      </div>
+      <div class="solutions-grid">
+        <article class="card solution">
+          <div class="eyebrow">Employment Benefits</div>
+          <h3>Beneficios Laborales y Estudios Actuariales</h3>
+          <p>Cumple con tus obligaciones patronales sin sorpresas financieras. Valuaciones bajo NIC 19, cálculo de jubilación y asesoría experta para proteger a tu empresa.</p>
+          <a href="https://actuaria.com/beneficios-laborales">Ver estudios actuariales</a>
+        </article>
+        <article class="card solution">
+          <div class="eyebrow">Insurance &amp; Healthcare</div>
+          <h3>Seguros y Medicina Prepagada</h3>
+          <p>Asegura la solvencia técnica y rentabilidad de tu operación. Diseñamos productos y calculamos reservas con precisión matemática para un crecimiento sostenible.</p>
+          <a href="https://actuaria.com/seguros-y-medicina">Ver modelos de solvencia</a>
+        </article>
+        <article class="card solution">
+          <div class="eyebrow">Data Wave</div>
+          <h3>Análisis de Datos para Negocios</h3>
+          <p>Transforma la complejidad de tu información en modelos predictivos y visuales que aceleran tus decisiones estratégicas.</p>
+          <a href="https://actuaria.com/analisis-de-datos">Ver soluciones de datos</a>
+        </article>
+        <article class="card solution">
+          <div class="eyebrow">Risk &amp; Finance</div>
+          <h3>Riesgo, SS y Finanzas Corporativas</h3>
+          <p>Anticípate al mercado antes de que ocurra. Proyecciones exactas y análisis integral para proteger tu patrimonio y optimizar tus inversiones.</p>
+          <a href="https://actuaria.com/riesgos-y-finanzas">Ver análisis de riesgos</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="clients">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Nuestro impacto en la región</div>
+        <h2>Una trayectoria construida junto a grandes empresas.</h2>
+      </div>
+      <div class="brands">
+        <span>McDonald's</span><span>Unilever</span><span>Grupo El Rosado</span><span>Adelca</span><span>Tía</span>
+        <span>Humana</span><span>Banco Bolivariano</span><span>Diners Club</span><span>Banco Pichincha</span><span>Saludsa</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="wrap">
+      <div class="head">
+        <h2>Precisión que genera confianza</h2>
+        <p>La experiencia de trabajar con Actuaria, en palabras de nuestros clientes.</p>
+      </div>
+      <div class="testi-grid">
+        <figure class="card testi" style="margin:0">
+          <blockquote>"Trabajar con Actuaria nos genera confianza. Su equipo ha demostrado un alto nivel de profesionalismo y conocimiento. Hemos obtenido soluciones personalizadas que se adaptan a nuestras necesidades. La comunicación es fluida y siempre están disponibles para resolver cualquier inquietud."</blockquote>
+          <figcaption><div class="who">Paúl Villagomez</div><div class="role">Gerente Técnico y de Riesgos, BMI Ecuador</div></figcaption>
+        </figure>
+        <figure class="card testi" style="margin:0">
+          <blockquote>"El Equipo de Actuaria Consultores ofrece un servicio actuarial excepcional. Su precisión, profesionalismo y atención al detalle han superado nuestras expectativas, proporcionando soluciones claras y efectivas. Altamente recomendados."</blockquote>
+          <figcaption><div class="who">David Vega</div><div class="role">Actuary I, AIG Ecuador</div></figcaption>
+        </figure>
+        <figure class="card testi" style="margin:0">
+          <blockquote>"Conozco a Actuaria hace muchos años. Su profesionalismo y empatía son incomparables. No solo realizan cálculos matemáticos y actuariales, sino que son verdaderos asesores que se involucran en el crecimiento y desarrollo de la compañía."</blockquote>
+          <figcaption><div class="who">Julio Tarré</div><div class="role">Gerente General, Plan Vital</div></figcaption>
+        </figure>
+        <figure class="card testi" style="margin:0">
+          <blockquote>"Gracias a Actuaria hemos implementado un sistema de cálculo de Capital Adecuado en tiempo Real utilizando los datos más actualizados disponibles, esto ha mejorado nuestra eficiencia, precisión, reduciendo errores y optimizando la toma de decisiones."</blockquote>
+          <figcaption><div class="who">Lía Silva</div><div class="role">CFO, Panamerican Life Insurance Group</div></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="credentials">
+    <div class="wrap">
+      <div class="head">
+        <h2>Respaldados por certificaciones nacionales e internacionales</h2>
+        <p>Operamos bajo las más estrictas normativas nacionales e internacionales para garantizar la precisión, seguridad y confidencialidad de su información.</p>
+      </div>
+      <div class="cert-grid">
+        <div class="card cert">Superintendencia de Compañías, Valores y Seguros del Ecuador</div>
+        <div class="card cert">Superintendencia de Bancos del Ecuador</div>
+        <div class="card cert">ISO 9001:2015 (IMQ)<a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6aa18df8abae1f93dd1f54ed_certificacion-iso-9001-2015.pdf">Ver credencial</a></div>
+        <div class="card cert">ISO/IEC 27001:2022 (IMQ)<a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6ac7cff3be23c6396ed1219a_certificacion-iso-iec-27001-2022.pdf">Ver credencial</a></div>
+        <div class="card cert">International Actuarial Association</div>
+        <div class="card cert">Pensions, Benefits and Social Security Section</div>
+        <div class="card cert">Instituto de Actuarios Españoles</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="card">
+        <img src="assets/velero-atardecer.jpg" alt="Velero al atardecer" width="1080" height="720">
+        <div class="cta-copy">
+          <h2>No dejes tus decisiones críticas al azar</h2>
+          <p>Obtén claridad absoluta antes de actuar. Te asesoramos estratégicamente y te demostramos cómo respaldar tu próximo paso con datos exactos.</p>
+          <a class="btn" href="#form">Agendar sesión ejecutiva</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="form" class="form">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Asesórate con Actuaria</div>
+        <h2>Toma el control de tus riesgos</h2>
+      </div>
+      <!-- Demo: el formulario no envía datos a ningún lado (los contactos reales llegan por actuaria.com). -->
+      <form class="card" action="#" onsubmit="return false">
+        <div class="fields">
+          <div class="field"><label for="ruc">*RUC</label><input id="ruc" type="text" placeholder="El RUC debe contener exactamente 13 dígitos"></div>
+          <div class="field"><label for="razon">*Razón social</label><input id="razon" type="text" placeholder="Ingresa la razón social"></div>
+          <div class="field"><label for="nombre">*Nombre</label><input id="nombre" type="text" placeholder="Ingresa tu nombre"></div>
+          <div class="field"><label for="apellido">*Apellido</label><input id="apellido" type="text" placeholder="Ingresa tu apellido"></div>
+          <div class="field full"><label for="correo">*Tu correo electrónico</label><input id="correo" type="email" placeholder="Ingresa tu correo"></div>
+          <fieldset class="full">
+            <legend>*Tipo de servicio</legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox">Estudio Actuarial</label>
+              <label class="check"><input type="checkbox">Riesgos y Finanzas</label>
+              <label class="check"><input type="checkbox">Seguros y Salud</label>
+              <label class="check"><input type="checkbox">Data Analytics</label>
+            </div>
+          </fieldset>
+          <div class="field full"><label for="mensaje">Tu mensaje (Opcional)</label><textarea id="mensaje" placeholder="Ingresa tu consulta"></textarea></div>
+          <label class="check full"><input type="checkbox">Declaro haber leído y entendido la Política de Protección de Datos Personales de ACTUARIA CONSULTORES S.A. En tal virtud, otorgo mi autorización expresa para el manejo y tratamiento de mis datos personales*</label>
+        </div>
+        <button class="btn" type="button">Enviar</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="card">
+      <div>
+        <img class="logo" src="assets/logo-actuaria.svg" alt="Actuaria Consultores" width="170" height="41">
+        <h4>Contacto</h4>
+        <p><a href="tel:+59323923400">Teléfono: (+593-2) 392-3400</a></p>
+        <p><a href="https://api.whatsapp.com/send/?phone=593979133351">Whatsapp: (+593-9) 7913-3351</a></p>
+        <p><a href="mailto:info@actuaria.com">Correo: info@actuaria.com</a></p>
+      </div>
+      <div>
+        <h4>Direcciones</h4>
+        <p>Quito: Av. Orellana E9-195 y Av. 6 de Diciembre, Edif. Alisal de Orellana, Of. 804.</p>
+        <p>Guayaquil: Av. José Santiago Castillo y Av. Francisco de Orellana, Edif. Millenium. Of. 1107.</p>
+        <h4 style="margin-top:18px">Redes</h4>
+        <ul><li><a href="https://www.facebook.com/actuariaconsultores">Facebook</a></li><li><a href="https://www.instagram.com/actuaria_ec/">Instagram</a></li><li><a href="https://www.linkedin.com/company/2412258/">LinkedIn</a></li><li><a href="https://www.youtube.com/channel/UCqtNWXgoRPgo3gmYfyi6B-A">YouTube</a></li></ul>
+      </div>
+      <div>
+        <h4>Gobierno Corporativo</h4>
+        <ul>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6abbe9ef7715a35b07817866_codigo-conducta-empresarial.pdf">Código de Conducta Empresarial</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6abbe9f0b559bd0f608baca7_politica-igualdad-genero.pdf">Política de Igualdad de Género</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6abbe9eff0ec45724fcbcbd6_codigo-buen-gobierno-corporativo.pdf">Código de Buen Gobierno Corporativo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Transparencia</h4>
+        <ul>
+          <li><a href="https://actuaria.com/seguridad-de-la-informacion">Seguridad de la Información</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6aa18df6459360730d2f79e4_politica-privacidad-proteccion-datos.pdf">Política de Privacidad y Protección de Datos Personales</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6aa18df799ec7f9fe8ef9d73_politica-prevencion-lavado-activos-antisoborno.pdf">Protección de Lavado de Activos y Antisoborno</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6aa18df7b31c8c53ca3393b3_politica-seguridad.pdf">Política de Seguridad</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6aa18df880e66d64b3d5f97d_solicitud-ejercicio-derechos-datos-personales.pdf">Solicitud para el Ejercicio de Derechos en el Tratamiento de Protección de Datos Personales</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6aa18df8abae1f93dd1f54ed_certificacion-iso-9001-2015.pdf">Certificación ISO 9001:2015</a></li>
+          <li><a href="https://cdn.prod.website-files.com/6967c96e0fba2ea4f94d3c69/6ac7cff3be23c6396ed1219a_certificacion-iso-iec-27001-2022.pdf">Certificación ISO/IEC 27001:2022</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copy">© 2026 Actuaria Consultores. Todos los derechos reservados</p>
+  </div>
+</footer>
+
+</body>
+</html>
